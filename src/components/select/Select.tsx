@@ -1,33 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Material from '@material-ui/core';
 
-type SelectOption = {
-  value: string;
+
+type SelectOption<T extends number | string> = {
+  value: T;
   label: string;
 };
 
-type SelectProps = {
-  onChange: (value: string) => void;
-  options: SelectOption[];
+type SelectProps<T extends number | string> = {
+  onChange: (value: T) => void;
+  options: SelectOption<T>[];
   label?: string;
   id: string;
   helperText?: string;
 };
 
-const Select = (props: SelectProps) => {
-  const [value, setValue] = useState('');
+const Select = <T extends number | string>(props: SelectProps<T>) => {
+  const [value, setValue] = useState<T>();
+
+  useEffect(() => {
+    if (value) {
+      props.onChange(value as T);
+    }
+  }, [value]);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    props.onChange(value);
-    setValue(event.target.value as string);
+    setValue(event.target.value as T);
   };
 
   return (
     <>
       {props.label && <Material.InputLabel id={`${props.id}-select-label`}>{props.label}</Material.InputLabel>}
-      <Material.Select labelId={`${props.id}-select-label`} id={`${props.id}`} value={value} onChange={handleChange}>
+      <Material.Select labelId={`${props.id}-select-label`} id={`${props.id}`} value={value || ''} onChange={handleChange}>
         {props.options.map((option) => (
-          <Material.MenuItem value={option.value} key={option.value}>
+          <Material.MenuItem value={option.value} key={option.value} defaultValue="">
             {option.label}
           </Material.MenuItem>
         ))}
