@@ -1,26 +1,21 @@
-import { createClient, Videos } from 'pexels';
-
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { ErrorResponse } from 'pexels/dist/types';
+import ReactPlayer from 'react-player';
+import usePexels from './hooks/usePexels';
 
 const App = () => {
-  const [title, setTitle] = useState<string>('');
-  const client = createClient('API_KEYU');
-
-  const getVideosByTitle = (title: string) => {
-    client.videos
-      .search({ query: title })
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
+  const { getVideos } = usePexels();
+  const [title, setTitle] = useState<string>('forest');
+  const [video, setVideo] = useState<string>();
   useEffect(() => {
-    getVideosByTitle(title);
-  }, [title]);
+    if (!title) {
+      return;
+    }
+    // TODO improve types
+    getVideos(title).then((result) => {
+      // @ts-ignore
+      setVideo(result?.videos[0]);
+    });
+  }, [title, getVideos]);
 
   const handleTitleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setTitle(event.target.value);
@@ -30,6 +25,7 @@ const App = () => {
     <>
       <div>Video App</div>
       <input type="text" placeholder="Video Title" onChange={handleTitleChange} />
+      <ReactPlayer url={video} />
     </>
   );
 };
