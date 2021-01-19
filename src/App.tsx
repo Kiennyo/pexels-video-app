@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { createClient, Videos } from 'pexels';
 
-function App() {
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { ErrorResponse } from 'pexels/dist/types';
+
+const App = () => {
+  const [title, setTitle] = useState<string>('');
+  const client = createClient('API_KEYU');
+
+  const getVideosByTitle = (title: string) => {
+    client.videos
+      .search({ query: title })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getVideosByTitle(title);
+  }, [title]);
+
+  const handleTitleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    setTitle(event.target.value);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div>Video App</div>
+      <input type="text" placeholder="Video Title" onChange={handleTitleChange} />
+    </>
   );
-}
+};
 
 export default App;
