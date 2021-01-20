@@ -19,6 +19,10 @@ const VideoAppContainer = () => {
     console.log(videos);
   }, [videos]);
 
+  useEffect(() => {
+    console.log(error);
+  }, [error]);
+
   const handleVideoDurationChange = (duration: number) => {
     console.log(duration);
   };
