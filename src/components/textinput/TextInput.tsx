@@ -8,9 +8,10 @@ type TextInputProps = {
   icon?: ReactNode;
   onChange: (value: string) => void;
   className?: string;
+  placeHolder?: string;
 };
 
-const TextInput = ({ variant = 'standard', icon, label, id, onChange, className }: TextInputProps) => {
+const TextInput = ({ variant = 'standard', icon, label, id, onChange, className, placeHolder }: TextInputProps) => {
   const [value, setValue] = useState('');
 
   const getInputProps = () => ({
@@ -37,6 +38,7 @@ const TextInput = ({ variant = 'standard', icon, label, id, onChange, className 
       data-testid={`${id}-test-id`}
       id={id}
       label={label}
+      placeholder={placeHolder}
       value={value}
       variant={variant}
       onChange={handleChange}

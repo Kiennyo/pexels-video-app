@@ -1,6 +1,5 @@
 import React from 'react';
 import usePexelsApi from '@hooks/usePexelsApi';
-import TextInput from '@components/textinput/TextInput';
 import VideoPlayer from '@components/videoplayer/VideoPlayer';
 import './VideoAppContainer.css';
 import VideoAppContainerDurationSelect from '@containers/videoapp/VideoAppContainerDurationSelect';
