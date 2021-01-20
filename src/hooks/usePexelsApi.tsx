@@ -1,5 +1,6 @@
 import { ErrorResponse, Videos } from 'pexels/dist/types';
 import { createClient } from 'pexels';
+import { useEffect, useState } from 'react';
 
 const getApiKey = (): string => {
   const key = process.env.REACT_APP_PEXELS_API_KEY;
@@ -9,13 +10,42 @@ const getApiKey = (): string => {
   return key;
 };
 
-const usePexelsApi = (): { getVideos: (title: string) => Promise<ErrorResponse | Videos> } => {
-  const client = createClient(getApiKey());
-  const getVideos = (title: string): Promise<ErrorResponse | Videos> => client.videos.search({ query: title });
+type UsePexelsApi = {
+  videos: Videos | null;
+  isLoading: boolean;
+  error: ErrorResponse | null;
+  setQuery: (query: string) => void;
+};
 
-  return {
-    getVideos,
+const usePexelsApi = (): UsePexelsApi => {
+  const client = createClient(getApiKey());
+  const [videos, setVideos] = useState<Videos | null>(null);
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  const [query, _setQuery] = useState<string>('');
+  const [error, setError] = useState<ErrorResponse | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      setError(null);
+      setIsLoading(true);
+
+      try {
+        const result = (await client.videos.search({ query })) as Videos;
+        setVideos(result);
+      } catch (error) {
+        setError(error);
+      }
+    };
+    setIsLoading(false);
+    fetchVideos();
+  }, [query]);
+
+  const setQuery = (query: string) => {
+    _setQuery(query);
   };
+
+  return { videos, isLoading, error, setQuery };
 };
 
 export default usePexelsApi;

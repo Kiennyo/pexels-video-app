@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import usePexelsApi from '@hooks/usePexelsApi';
 import VideoPlayer from '@components/videoplayer/VideoPlayer';
 import './VideoAppContainer.css';
@@ -8,10 +8,16 @@ import VideoAppContainerSearch from '@containers/videoapp/VideoAppContainerSearc
 
 const VideoAppContainer = () => {
   // eslint-disable-next-line no-unused-vars
-  const { getVideos } = usePexelsApi();
-  const handleSelectChange = (value: number) => {
-    console.log(value);
-  };
+  const { videos, error, isLoading, setQuery } = usePexelsApi();
+  const [searchInput, setSearchInput] = useState<string>('');
+
+  useEffect(() => {
+    setQuery(searchInput);
+  }, [searchInput]);
+
+  useEffect(() => {
+    console.log(videos);
+  }, [videos]);
 
   const handleVideoDurationChange = (duration: number) => {
     console.log(duration);
@@ -22,7 +28,7 @@ const VideoAppContainer = () => {
   };
 
   const handleVideoSearchChange = (searchInput: string) => {
-    console.log(`search input ${searchInput}`);
+    setSearchInput(searchInput);
   };
 
   return (
