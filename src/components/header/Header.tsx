@@ -1,6 +1,11 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
+import './Header.css';
 
-const Header = () => <Typography variant="h4">Video App</Typography>;
+const Header = () => (
+  <header className="Header">
+    <Typography variant="h3">Video App</Typography>
+  </header>
+);
 
 export default Header;

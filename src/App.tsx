@@ -1,9 +1,15 @@
 import React from 'react';
-import VideoApp from './containers/videoapp/VideoApp';
+import Header from '@components/header/Header';
+import VideoAppContainer from '@containers/videoapp/VideoAppContainer';
+import './App.css';
 
 const App = () => (
   <>
-    <VideoApp />
+    <div className="HeaderWrapper">
+      <Header />
+    </div>
+
+    <VideoAppContainer />
   </>
 );
 

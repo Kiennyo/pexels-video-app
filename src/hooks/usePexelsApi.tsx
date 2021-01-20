@@ -9,7 +9,7 @@ const getApiKey = (): string => {
   return key;
 };
 
-const usePexels = (): { getVideos: (title: string) => Promise<ErrorResponse | Videos> } => {
+const usePexelsApi = (): { getVideos: (title: string) => Promise<ErrorResponse | Videos> } => {
   const client = createClient(getApiKey());
   const getVideos = (title: string): Promise<ErrorResponse | Videos> => client.videos.search({ query: title });
 
@@ -18,4 +18,4 @@ const usePexels = (): { getVideos: (title: string) => Promise<ErrorResponse | Vi
   };
 };
 
-export default usePexels;
+export default usePexelsApi;

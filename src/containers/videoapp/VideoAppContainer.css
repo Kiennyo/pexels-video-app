@@ -1,0 +1,24 @@
+.Row {
+    display: flex;
+    justify-content: space-around;
+}
+
+.Controls {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 400px;
+    width: 400px;
+}
+
+.Control-Element {
+    margin-bottom: 25px;
+}
+
+.Control-Element-Search {
+    width: 400px;
+}
+
+.Control-Element-Select {
+    width: 200px;
+}
