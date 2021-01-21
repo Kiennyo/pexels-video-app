@@ -1,5 +1,6 @@
-import Select from '@components/select/Select';
 import React from 'react';
+
+import Select from '@/components/select/Select';
 import './VideoAppContainer.css';
 
 type VideoAppContainerDurationSelectProps = {

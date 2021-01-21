@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 
 type UseDebounceProps = {
   value: string;
-  delay: number;
+  delay?: number;
 };
 
-const useDebounce = ({ value, delay }: UseDebounceProps): string => {
+const useDebounce = ({ value, delay = 300 }: UseDebounceProps): string => {
   const [debouncedValue, setDebouncedValue] = useState<string>(value);
 
   useEffect(() => {

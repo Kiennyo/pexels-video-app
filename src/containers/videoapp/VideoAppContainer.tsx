@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import usePexelsApi from '@hooks/usePexelsApi';
-import VideoPlayer from '@components/videoplayer/VideoPlayer';
+
+import usePexelsApi from '@/hooks/usePexelsApi';
+import VideoPlayer from '@/components/videoplayer/VideoPlayer';
+import VideoAppContainerDurationSelect from '@/containers/videoapp/VideoAppContainerDurationSelect';
+import VideoAppContainerVideoCountSelect from '@/containers/videoapp/VideoAppContainerVideoCountSelect';
+import VideoAppContainerSearch from '@/containers/videoapp/VideoAppContainerSearch';
 import './VideoAppContainer.css';
-import VideoAppContainerDurationSelect from '@containers/videoapp/VideoAppContainerDurationSelect';
-import VideoAppContainerVideoCountSelect from '@containers/videoapp/VideoAppContainerVideoCountSelect';
-import VideoAppContainerSearch from '@containers/videoapp/VideoAppContainerSearch';
 
 const VideoAppContainer = () => {
   // eslint-disable-next-line no-unused-vars
   const { videos, error, isLoading, setQuery } = usePexelsApi();
   const [searchInput, setSearchInput] = useState<string>('');
+  const [duration, setDuration] = useState<number | null>(null);
 
   useEffect(() => {
     setQuery(searchInput);

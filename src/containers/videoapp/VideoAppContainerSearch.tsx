@@ -1,7 +1,9 @@
-import TextInput from '@components/textinput/TextInput';
 import React from 'react';
-import './VideoAppContainer.css';
 import SearchIcon from '@material-ui/icons/Search';
+
+import TextInput from '@/components/textinput/TextInput';
+
+import './VideoAppContainer.css';
 
 type VideoAppContainerSearchProps = {
   onChange: (value: string) => void;
