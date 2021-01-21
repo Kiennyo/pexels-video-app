@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import * as Material from '@material-ui/core';
 
 type SelectOption<T extends number | string> = {
@@ -14,6 +14,7 @@ type SelectProps<T extends number | string> = {
   helperText?: string;
   variant?: 'standard' | 'outlined' | 'filled';
   className?: string;
+  initialValue?: T;
 };
 
 const Select = <T extends number | string>({
@@ -24,8 +25,9 @@ const Select = <T extends number | string>({
   options,
   variant = 'outlined',
   className,
+  initialValue,
 }: SelectProps<T>) => {
-  const [value, setValue] = useState<T>();
+  const [value, setValue] = useState<T>(initialValue as T);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     const inputValue = event.target.value as T;
@@ -45,7 +47,7 @@ const Select = <T extends number | string>({
         onChange={handleChange}
       >
         {options.map((option) => (
-          <Material.MenuItem defaultValue="" key={option.value} value={option.value}>
+          <Material.MenuItem key={option.value} value={option.value}>
             {option.label}
           </Material.MenuItem>
         ))}

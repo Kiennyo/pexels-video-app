@@ -5,6 +5,7 @@ import './VideoAppContainer.css';
 
 type VideoAppContainerDurationSelectProps = {
   onChange: (duration: number) => void;
+  initialDuration: number;
 };
 
 const options = [
@@ -13,12 +14,13 @@ const options = [
   { value: 30, label: '30 s' },
 ];
 
-const VideoAppContainerDurationSelect = ({ onChange }: VideoAppContainerDurationSelectProps) => (
+const VideoAppContainerDurationSelect = ({ onChange, initialDuration }: VideoAppContainerDurationSelectProps) => (
   <div className="Control-Element">
     <Select<number>
       className="Control-Element-Select"
       helperText="Each video plays for up to"
       id="number-of-videos"
+      initialValue={initialDuration}
       options={options}
       onChange={onChange}
     />
