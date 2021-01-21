@@ -44,7 +44,12 @@ const VideoAppContainer = () => {
         <VideoAppContainerDurationSelect onChange={handleVideoDurationChange} />
         <VideoAppContainerVideoCountSelect onChange={handleVideoCountChange} />
       </div>
-      <VideoPlayer url="https://www.youtube.com/watch?v=ysz5S6PUM-U" />
+      <VideoPlayer
+        author="John Doe"
+        isLoading={isLoading}
+        pictureUrl="https://images.pexels.com/videos/1448735/pictures/preview-0.jpg"
+        url="https://player.vimeo.com/external/291648067.hd.mp4?s=94998971682c6a3267e4cbd19d16a7b6c720f345&profile_id=175&oauth2_token_id=57447761"
+      />
     </div>
   );
 };
