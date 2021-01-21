@@ -9,7 +9,6 @@ const App = () => (
     <div className="HeaderWrapper">
       <Header />
     </div>
-
     <VideoAppContainer />
   </>
 );

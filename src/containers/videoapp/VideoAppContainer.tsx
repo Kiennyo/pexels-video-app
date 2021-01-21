@@ -1,20 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Video } from 'pexels';
 
+import { INITIAL_DURATION, INITIAL_VIDEO_COUNT } from '@/containers/videoapp/constants';
 import usePexelsApi from '@/hooks/usePexelsApi';
 import VideoPlayer from '@/components/videoplayer/VideoPlayer';
 import VideoAppContainerDurationSelect from '@/containers/videoapp/VideoAppContainerDurationSelect';
 import VideoAppContainerVideoCountSelect from '@/containers/videoapp/VideoAppContainerVideoCountSelect';
 import VideoAppContainerSearch from '@/containers/videoapp/VideoAppContainerSearch';
 import './VideoAppContainer.css';
-import { INITIAL_DURATION, INITIAL_VIDEO_COUNT } from '@/containers/videoapp/constants';
 
 const VideoAppContainer = () => {
   const { videos, error, isLoading, setQuery } = usePexelsApi();
   const [duration, setDuration] = useState<number>(INITIAL_DURATION);
   const [videoCount, setVideoCount] = useState<number>(INITIAL_VIDEO_COUNT);
+  const [currentVideo, setCurrentVideo] = useState<Video | null>(null);
+  const currentVideoIdx = useRef<number>(0);
 
   useEffect(() => {
-    console.log(videos);
+    if (videos && videos?.length > 0) {
+      currentVideoIdx.current = 0;
+      setCurrentVideo(videos[0]);
+      setVideoCount(videos.length + 1 > videoCount ? videos.length + 1 : videoCount);
+    }
   }, [videos]);
 
   useEffect(() => {
@@ -34,22 +41,40 @@ const VideoAppContainer = () => {
   };
 
   const handleProgress = () => {
-    console.log('progress');
+    const nextVideoIdx = currentVideoIdx.current + 1;
+
+    const setNextVideo = () => {
+      if (videos) {
+        setCurrentVideo(videos[nextVideoIdx]);
+        currentVideoIdx.current = nextVideoIdx;
+      }
+    };
+
+    const setFirstVideo = () => {
+      if (videos) {
+        setCurrentVideo(videos[0]);
+        currentVideoIdx.current = 0;
+      }
+    };
+
+    if (videos && nextVideoIdx < videos.length) {
+      setNextVideo();
+    } else if (videos) {
+      setFirstVideo();
+    }
   };
 
   return (
     <div className="Row">
       <div className="Controls">
         <VideoAppContainerSearch onChange={handleVideoSearchChange} />
-        <VideoAppContainerDurationSelect initialDuration={INITIAL_DURATION} onChange={handleVideoDurationChange} />
-        <VideoAppContainerVideoCountSelect initialVideoCount={INITIAL_VIDEO_COUNT} onChange={handleVideoCountChange} />
+        <VideoAppContainerDurationSelect initialDuration={duration} onChange={handleVideoDurationChange} />
+        <VideoAppContainerVideoCountSelect initialVideoCount={videoCount} onChange={handleVideoCountChange} />
       </div>
       <VideoPlayer
-        author="John Doe"
+        currentVideo={currentVideo}
         duration={duration}
         isLoading={isLoading}
-        pictureUrl="https://images.pexels.com/videos/1448735/pictures/preview-0.jpg"
-        url="https://player.vimeo.com/external/291648067.hd.mp4?s=94998971682c6a3267e4cbd19d16a7b6c720f345&profile_id=175&oauth2_token_id=57447761"
         onProgress={handleProgress}
       />
     </div>

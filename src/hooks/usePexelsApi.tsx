@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ErrorResponse, Videos } from 'pexels/dist/types';
+import { ErrorResponse, Video, Videos } from 'pexels/dist/types';
 import { createClient } from 'pexels';
 
 import useDebounce from '@/hooks/useDebounce';
@@ -13,7 +13,7 @@ const getApiKey = (): string => {
 };
 
 type UsePexelsApi = {
-  videos: Videos | null;
+  videos: Video[] | null;
   isLoading: boolean;
   error: ErrorResponse | null;
   setQuery: (query: string) => void;
@@ -21,7 +21,7 @@ type UsePexelsApi = {
 
 const usePexelsApi = (): UsePexelsApi => {
   const client = createClient(getApiKey());
-  const [videos, setVideos] = useState<Videos | null>(null);
+  const [videos, setVideos] = useState<Video[] | null>(null);
   const [query, _setQuery] = useState<string>('');
   const [error, setError] = useState<ErrorResponse | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -32,8 +32,8 @@ const usePexelsApi = (): UsePexelsApi => {
       setError(null);
       setIsLoading(true);
       try {
-        const result = (await client.videos.search({ query })) as Videos;
-        setVideos(result);
+        const result = (await client.videos.search({ query: debouncedQuery })) as Videos;
+        setVideos(() => result.videos);
       } catch (error) {
         setError(error);
       } finally {
