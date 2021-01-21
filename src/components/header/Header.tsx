@@ -1,7 +1,7 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
 
 import './Header.css';
+import Typography from '@/components/typography/Typography';
 
 const Header = () => (
   <header className="Header">

@@ -36,9 +36,10 @@ const usePexelsApi = (): UsePexelsApi => {
         setVideos(result);
       } catch (error) {
         setError(error);
+      } finally {
+        setIsLoading(false);
       }
     };
-    setIsLoading(false);
     debouncedQuery && fetchVideos();
   }, [debouncedQuery]);
 

@@ -14,3 +14,10 @@
   transform: translate(-50%);
   border-radius: 4px;
 }
+
+.VideoPlayerLoader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3);
+}

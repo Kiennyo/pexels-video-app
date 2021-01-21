@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 
 import VideoPlayerOverlay from '@/components/videoplayer/VideoPlayerOverlay';
+import VideoPlayerLoader from '@/components/videoplayer/VideoPlayerLoader';
 import './VideoPlayer.css';
 
 type VideoPlayerProps = {
@@ -28,8 +29,16 @@ const VideoPlayer = ({ url, isLoading, author, pictureUrl }: VideoPlayerProps) =
 
   return (
     <div className="Player">
-      <ReactPlayer controls={false} light={light} muted={true} playIcon={<></>} playing={playing} url={url} />
-      <VideoPlayerOverlay author={author} />
+      <ReactPlayer
+        controls={false}
+        light={light}
+        muted={true}
+        playIcon={<></>}
+        playing={playing}
+        url={url}
+        wrapper={isLoading ? VideoPlayerLoader : undefined}
+      />
+      {!isLoading && <VideoPlayerOverlay author={author} />}
     </div>
   );
 };
