@@ -101,7 +101,8 @@
         "pathGroups": [
           { "group": "internal", "pattern": "@/components/**" },
           { "group": "internal", "pattern": "@/containers/**" },
-          { "group": "internal", "pattern": "@/hooks/**" }
+          { "group": "internal", "pattern": "@/hooks/**" },
+          { "group": "internal", "pattern": "@/utils/**" }
         ],
         "pathGroupsExcludedImportTypes": ["builtin"]
       }

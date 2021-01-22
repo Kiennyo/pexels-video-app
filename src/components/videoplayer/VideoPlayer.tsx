@@ -4,7 +4,7 @@ import { Video } from 'pexels';
 
 import VideoPlayerOverlay from '@/components/videoplayer/VideoPlayerOverlay';
 import VideoPlayerLoader from '@/components/videoplayer/VideoPlayerLoader';
-
+import { findVideoLink } from '@/utils/PexelsUtil';
 import './VideoPlayer.css';
 
 type VideoPlayerProps = {
@@ -60,7 +60,7 @@ const VideoPlayer = ({ isLoading, duration, onProgress, currentVideo }: VideoPla
         playIcon={<></>}
         playing={isPlaying}
         progressInterval={progressIntervalInSeconds}
-        url={currentVideo?.video_files[0].link}
+        url={currentVideo ? findVideoLink(currentVideo) : undefined}
         wrapper={isLoading ? VideoPlayerLoader : undefined}
         onProgress={onProgress}
       />
