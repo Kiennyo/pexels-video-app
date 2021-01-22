@@ -4,19 +4,19 @@ import { createClient } from 'pexels';
 
 import useDebounce from '@/hooks/useDebounce';
 
+type UsePexelsApi = {
+  videos: Video[] | null;
+  isLoading: boolean;
+  error: ErrorResponse | null;
+  setQuery: (query: string) => void;
+};
+
 const getApiKey = (): string => {
   const key = process.env.REACT_APP_PEXELS_API_KEY;
   if (!key) {
     throw new Error('Pexels API key not provided');
   }
   return key;
-};
-
-type UsePexelsApi = {
-  videos: Video[] | null;
-  isLoading: boolean;
-  error: ErrorResponse | null;
-  setQuery: (query: string) => void;
 };
 
 const client = createClient(getApiKey());
