@@ -4,6 +4,7 @@ import * as Material from '@material-ui/core';
 type SelectOption<T extends number | string> = {
   value: T;
   label: string;
+  disabled?: boolean;
 };
 
 type SelectProps<T extends number | string> = {
@@ -53,7 +54,7 @@ const Select = <T extends number | string>({
         onChange={handleChange}
       >
         {options.map((option) => (
-          <Material.MenuItem key={option.value} value={option.value}>
+          <Material.MenuItem disabled={option.disabled} key={option.value} value={option.value}>
             {option.label}
           </Material.MenuItem>
         ))}

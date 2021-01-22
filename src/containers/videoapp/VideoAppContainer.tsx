@@ -21,12 +21,10 @@ const VideoAppContainer = () => {
       currentVideoIdx.current = 0;
       setCurrentVideo(videos[0]);
       setVideoCount((prevCount) => (videos.length < prevCount ? videos.length : prevCount));
+    } else {
+      setCurrentVideo(null);
     }
   }, [videos]);
-
-  useEffect(() => {
-    console.log(error);
-  }, [error]);
 
   const handleVideoDurationChange = (duration: number) => {
     setDuration(duration);
@@ -52,7 +50,7 @@ const VideoAppContainer = () => {
 
     const setFirstVideo = () => {
       if (videos) {
-        setCurrentVideo({...videos[0]});
+        setCurrentVideo({ ...videos[0] });
         currentVideoIdx.current = 0;
       }
     };
@@ -69,7 +67,11 @@ const VideoAppContainer = () => {
       <div className="Controls">
         <VideoAppContainerSearch onChange={handleVideoSearchChange} />
         <VideoAppContainerDurationSelect initialDuration={duration} onChange={handleVideoDurationChange} />
-        <VideoAppContainerVideoCountSelect value={videoCount} onChange={handleVideoCountChange} />
+        <VideoAppContainerVideoCountSelect
+          value={videoCount}
+          videoCount={videos?.length || 0}
+          onChange={handleVideoCountChange}
+        />
       </div>
       <VideoPlayer currentVideo={currentVideo} duration={duration} isLoading={isLoading} onProgress={handleProgress} />
     </div>

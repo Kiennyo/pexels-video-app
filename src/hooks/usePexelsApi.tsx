@@ -28,12 +28,17 @@ const usePexelsApi = (): UsePexelsApi => {
   const debouncedQuery = useDebounce({ value: query });
 
   useEffect(() => {
+    if (!debouncedQuery) {
+      setVideos(null);
+      return;
+    }
+
     const fetchVideos = async () => {
       setError(null);
       setIsLoading(true);
       try {
         const result = (await client.videos.search({ query: debouncedQuery })) as Videos;
-        setVideos(() => result.videos);
+        setVideos(() => result.videos.slice(0, 5));
       } catch (error) {
         setError(error);
       } finally {

@@ -20,8 +20,8 @@ const VideoAppContainerDurationSelect = ({ onChange, initialDuration }: VideoApp
       className="Control-Element-Select"
       helperText="Each video plays for up to"
       id="number-of-videos"
-      value={initialDuration}
       options={options}
+      value={initialDuration}
       onChange={onChange}
     />
   </div>
