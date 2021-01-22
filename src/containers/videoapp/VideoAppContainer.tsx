@@ -20,7 +20,7 @@ const VideoAppContainer = () => {
     if (videos && videos?.length > 0) {
       currentVideoIdx.current = 0;
       setCurrentVideo(videos[0]);
-      setVideoCount(videos.length + 1 > videoCount ? videos.length + 1 : videoCount);
+      setVideoCount((prevCount) => (videos.length < prevCount ? videos.length : prevCount));
     }
   }, [videos]);
 
@@ -52,15 +52,15 @@ const VideoAppContainer = () => {
 
     const setFirstVideo = () => {
       if (videos) {
-        setCurrentVideo(videos[0]);
+        setCurrentVideo({...videos[0]});
         currentVideoIdx.current = 0;
       }
     };
 
-    if (videos && nextVideoIdx < videos.length) {
-      setNextVideo();
-    } else if (videos) {
+    if (videos && videoCount === currentVideoIdx.current + 1) {
       setFirstVideo();
+    } else {
+      setNextVideo();
     }
   };
 
@@ -71,12 +71,7 @@ const VideoAppContainer = () => {
         <VideoAppContainerDurationSelect initialDuration={duration} onChange={handleVideoDurationChange} />
         <VideoAppContainerVideoCountSelect initialVideoCount={videoCount} onChange={handleVideoCountChange} />
       </div>
-      <VideoPlayer
-        currentVideo={currentVideo}
-        duration={duration}
-        isLoading={isLoading}
-        onProgress={handleProgress}
-      />
+      <VideoPlayer currentVideo={currentVideo} duration={duration} isLoading={isLoading} onProgress={handleProgress} />
     </div>
   );
 };
