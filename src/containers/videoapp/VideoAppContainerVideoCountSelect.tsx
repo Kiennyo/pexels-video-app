@@ -16,7 +16,7 @@ const VideoAppContainerVideoCountSelect = ({ onChange, value, videoCount }: Vide
 
   useEffect(() => {
     if (videoCount) {
-      setOptions(options.map((option) => ({ ...option, disabled: videoCount < option.value })));
+      setOptions((options) => options.map((option) => ({ ...option, disabled: videoCount < option.value })));
     }
   }, [videoCount]);
 

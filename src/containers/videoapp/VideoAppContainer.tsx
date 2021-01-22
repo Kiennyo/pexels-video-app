@@ -10,7 +10,7 @@ import VideoAppContainerSearch from '@/containers/videoapp/VideoAppContainerSear
 import './VideoAppContainer.css';
 
 const VideoAppContainer = () => {
-  const { videos, error, isLoading, setQuery } = usePexelsApi();
+  const { videos, isLoading, setQuery } = usePexelsApi();
   const [duration, setDuration] = useState<number>(INITIAL_DURATION);
   const [videoCount, setVideoCount] = useState<number>(INITIAL_VIDEO_COUNT);
   const [currentVideo, setCurrentVideo] = useState<Video | null>(null);
@@ -63,17 +63,24 @@ const VideoAppContainer = () => {
   };
 
   return (
-    <div className="Row">
-      <div className="Controls">
-        <VideoAppContainerSearch onChange={handleVideoSearchChange} />
-        <VideoAppContainerDurationSelect initialDuration={duration} onChange={handleVideoDurationChange} />
-        <VideoAppContainerVideoCountSelect
-          value={videoCount}
-          videoCount={videos?.length || 0}
-          onChange={handleVideoCountChange}
+    <div>
+      <div className="Row">
+        <div className="Controls">
+          <VideoAppContainerSearch onChange={handleVideoSearchChange} />
+          <VideoAppContainerDurationSelect initialDuration={duration} onChange={handleVideoDurationChange} />
+          <VideoAppContainerVideoCountSelect
+            value={videoCount}
+            videoCount={videos?.length || 0}
+            onChange={handleVideoCountChange}
+          />
+        </div>
+        <VideoPlayer
+          currentVideo={currentVideo}
+          duration={duration}
+          isLoading={isLoading}
+          onProgress={handleProgress}
         />
       </div>
-      <VideoPlayer currentVideo={currentVideo} duration={duration} isLoading={isLoading} onProgress={handleProgress} />
     </div>
   );
 };

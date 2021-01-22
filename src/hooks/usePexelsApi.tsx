@@ -19,8 +19,9 @@ type UsePexelsApi = {
   setQuery: (query: string) => void;
 };
 
+const client = createClient(getApiKey());
+
 const usePexelsApi = (): UsePexelsApi => {
-  const client = createClient(getApiKey());
   const [videos, setVideos] = useState<Video[] | null>(null);
   const [query, _setQuery] = useState<string>('');
   const [error, setError] = useState<ErrorResponse | null>(null);
@@ -38,7 +39,7 @@ const usePexelsApi = (): UsePexelsApi => {
       setIsLoading(true);
       try {
         const result = (await client.videos.search({ query: debouncedQuery })) as Videos;
-        setVideos(() => result.videos.slice(0, 5));
+        setVideos(() => result.videos);
       } catch (error) {
         setError(error);
       } finally {
