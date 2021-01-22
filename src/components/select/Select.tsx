@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Material from '@material-ui/core';
 
 type SelectOption<T extends number | string> = {
@@ -14,7 +14,7 @@ type SelectProps<T extends number | string> = {
   helperText?: string;
   variant?: 'standard' | 'outlined' | 'filled';
   className?: string;
-  initialValue?: T;
+  value?: T;
 };
 
 const Select = <T extends number | string>({
@@ -25,15 +25,21 @@ const Select = <T extends number | string>({
   options,
   variant = 'outlined',
   className,
-  initialValue,
+  value,
 }: SelectProps<T>) => {
-  const [value, setValue] = useState<T>(initialValue as T);
+  const [internalValue, setInternalValue] = useState<T | undefined>(value);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     const inputValue = event.target.value as T;
     onChange(inputValue);
-    setValue(inputValue);
+    setInternalValue(inputValue);
   };
+
+  useEffect(() => {
+    if (value) {
+      setInternalValue(value);
+    }
+  }, [value]);
 
   return (
     <>
@@ -42,7 +48,7 @@ const Select = <T extends number | string>({
         className={className}
         id={`${id}`}
         labelId={`${id}-select-label`}
-        value={value || ''}
+        value={internalValue || ''}
         variant={variant}
         onChange={handleChange}
       >

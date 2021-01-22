@@ -69,7 +69,7 @@ const VideoAppContainer = () => {
       <div className="Controls">
         <VideoAppContainerSearch onChange={handleVideoSearchChange} />
         <VideoAppContainerDurationSelect initialDuration={duration} onChange={handleVideoDurationChange} />
-        <VideoAppContainerVideoCountSelect initialVideoCount={videoCount} onChange={handleVideoCountChange} />
+        <VideoAppContainerVideoCountSelect value={videoCount} onChange={handleVideoCountChange} />
       </div>
       <VideoPlayer currentVideo={currentVideo} duration={duration} isLoading={isLoading} onProgress={handleProgress} />
     </div>
