@@ -7,7 +7,7 @@ type SelectOption<T extends number | string> = {
   disabled?: boolean;
 };
 
-type SelectProps<T extends number | string> = {
+export type SelectProps<T extends number | string> = {
   onChange: (value: T) => void;
   options: SelectOption<T>[];
   label?: string;
@@ -44,22 +44,32 @@ const Select = <T extends number | string>({
 
   return (
     <>
-      {label && <Material.InputLabel id={`${id}-select-label`}>{label}</Material.InputLabel>}
+      {label && (
+        <Material.InputLabel data-testid={`${id}-select-label-test-id`} id={`${id}-select-label`}>
+          {label}
+        </Material.InputLabel>
+      )}
       <Material.Select
         className={className}
-        id={`${id}`}
-        labelId={`${id}-select-label`}
+        data-testid={`${id}-test-id`}
+        id={`${id}-select`}
+        labelId={label ? `${id}-select-label` : undefined}
         value={internalValue || ''}
         variant={variant}
         onChange={handleChange}
       >
-        {options.map((option) => (
-          <Material.MenuItem disabled={option.disabled} key={option.value} value={option.value}>
+        {options.map((option, idx) => (
+          <Material.MenuItem
+            data-testid={`${id}-select-item-${idx}-test-id`}
+            disabled={option.disabled}
+            key={option.value}
+            value={option.value}
+          >
             {option.label}
           </Material.MenuItem>
         ))}
       </Material.Select>
-      {helperText && <Material.FormHelperText>{helperText}</Material.FormHelperText>}
+      {helperText && <Material.FormHelperText data-testid={`${id}-select-helper-text`}>{helperText}</Material.FormHelperText>}
     </>
   );
 };

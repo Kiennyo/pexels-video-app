@@ -35,8 +35,8 @@ const TextInput = ({ variant = 'standard', icon, label, id, onChange, className,
   return (
     <TextField
       className={className}
-      data-testid={`${id}-test-id`}
-      id={id}
+      data-testid={`${id}-input-test-id`}
+      id={`${id}-input`}
       label={label}
       placeholder={placeHolder}
       value={value}

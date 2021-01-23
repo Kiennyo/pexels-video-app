@@ -11,7 +11,7 @@ type VideoAppContainerDurationSelectProps = {
 const options = [
   { value: 10, label: '10 s' },
   { value: 20, label: '20 s' },
-  { value: 30, label: '30 s' },
+  { value: 30, label: '30 s', disabled: true },
 ];
 
 const VideoAppContainerDurationSelect = ({ onChange, initialDuration }: VideoAppContainerDurationSelectProps) => (
