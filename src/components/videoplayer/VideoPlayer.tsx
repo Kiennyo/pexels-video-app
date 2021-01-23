@@ -7,12 +7,14 @@ import VideoPlayerLoader from '@/components/videoplayer/VideoPlayerLoader';
 import { findVideoLink } from '@/utils/PexelsUtil';
 import './VideoPlayer.css';
 
-type VideoPlayerProps = {
+export type VideoPlayerProps = {
   isLoading: boolean;
   duration: number;
   onProgress: () => void;
   currentVideo: Video | null;
 };
+
+export const IMAGE_PREVIEW_TIME = 1500;
 
 const getPicture = (currentVideo: Video | null) => (currentVideo ? currentVideo.video_pictures[0].picture : undefined);
 
@@ -44,7 +46,7 @@ const VideoPlayer = ({ isLoading, duration, onProgress, currentVideo }: VideoPla
       timeout = setTimeout(() => {
         setLight(false);
         setIsPlaying(true);
-      }, 1500);
+      }, IMAGE_PREVIEW_TIME);
     }
     return () => {
       clearTimeout(timeout);
@@ -55,6 +57,7 @@ const VideoPlayer = ({ isLoading, duration, onProgress, currentVideo }: VideoPla
     <div className="Player">
       <ReactPlayer
         controls={false}
+        data-testid="video-player-test-id"
         light={light}
         muted={true}
         playIcon={<></>}
