@@ -1,3 +1,6 @@
+# Setup environment
+Setup .env file according .env-sample file, you can get API key from https://www.pexels.com/api/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
