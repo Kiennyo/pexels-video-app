@@ -39,7 +39,7 @@ const usePexelsApi = (): UsePexelsApi => {
       setIsLoading(true);
       try {
         const result = (await client.videos.search({ query: debouncedQuery })) as Videos;
-        setVideos(() => result.videos.splice(0, 5));
+        setVideos(() => result.videos);
       } catch (error) {
         setError(error);
       } finally {
