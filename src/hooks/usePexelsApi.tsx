@@ -4,7 +4,7 @@ import { createClient } from 'pexels';
 
 import useDebounce from '@/hooks/useDebounce';
 
-type UsePexelsApi = {
+export type UsePexelsApi = {
   videos: Video[] | null;
   isLoading: boolean;
   error: ErrorResponse | null;
@@ -39,7 +39,7 @@ const usePexelsApi = (): UsePexelsApi => {
       setIsLoading(true);
       try {
         const result = (await client.videos.search({ query: debouncedQuery })) as Videos;
-        setVideos(() => result.videos);
+        setVideos(() => result.videos.splice(0, 5));
       } catch (error) {
         setError(error);
       } finally {
